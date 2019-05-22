@@ -6,6 +6,9 @@ if (-not (Get-Command "node" -ErrorAction SilentlyContinue)) {
     exit 1
 }
 
+node -v
+npm -v
+
 Push-Location $PSScriptRoot
 
 $TemplateHome="$PSScriptRoot/src/docfx.website.themes/"
