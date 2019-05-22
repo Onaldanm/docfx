@@ -6,8 +6,8 @@ if (-not (Get-Command "node" -ErrorAction SilentlyContinue)) {
     exit 1
 }
 
-node -v
-npm -v
+$logLevelParam = if ($env:Agent.Name -eq "Hosted Windows 2019 with VS2019") { "--loglevel=error" } else { "" }
+exec { & npm install $logLevelParam }
 
 Push-Location $PSScriptRoot
 
@@ -16,12 +16,12 @@ $DefaultTemplate="${TemplateHome}default/"
 $GulpCommand="${DefaultTemplate}node_modules/gulp/bin/gulp"
 
 Set-Location "$DefaultTemplate"
-npm install
+npm install $logLevelParam
 node ./node_modules/bower/bin/bower install
 node "$GulpCommand"
 
 Set-Location "$TemplateHome"
-npm install
+npm install $logLevelParam
 node "$GulpCommand"
 
 Pop-Location
